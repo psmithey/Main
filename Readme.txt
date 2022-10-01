@@ -1,1 +1,1 @@
-This repo has been created for Reveture project1 files.
+This repo was created for Reveture project1 files
