@@ -2,15 +2,17 @@
 //Console.WriteLine("Hello, World!");
 using System;
 bool exitApp = false;
-string ans;
+string response = "";
 while (!exitApp)
 {
-    ans = Expenses.Login();
-    switch (ans)
+    response = Expenses.Login();
+    switch (response)
     {
         case "x":
             exitApp = true;
             break;
+        case "z":
+            continue;
         default:
             exitApp = true;
             break;
@@ -52,7 +54,7 @@ public class Expenses
                 return "x";
                 break;
             default:
-
+                Console.WriteLine("Invalid entry. Try again");
                 return "z";
                 break;
         }
