@@ -22,12 +22,13 @@ while (!exitApp)
                 continue;
                 break;
             default: //user has successfully logged in, or has registered. the return value is the user's userId from the database
+                //it will also be determined the user type during login. admin, manager, or employee
                 validUser = true;
                 break;
         }
     }
     else
-    {
+    { //there will be an if statement here once it's determined the user type to choose which class to call. admin, manager, or employee
         validLogin = Expenses.Employee("Paul", "1");
         if (validLogin == "r" || validLogin == "s" || validLogin == "p")
         {
