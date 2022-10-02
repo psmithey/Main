@@ -144,9 +144,8 @@ public class Expenses
         Expenses exp = new Expenses();
         exp.setFirstName(words[0]);
         exp.setUserId(words[1]);
-
         string ans;
-        Console.WriteLine("User: " + words[0]);
+        Console.WriteLine("User: " + exp.getFirstName());
         Console.WriteLine(" ----------------------------------------------------------------------------------------------------- ");
         Console.WriteLine("| " + "Submit new Expense Report(r) View all past submissions(s) View only pending submissions(p) Exit(x) |");
         Console.WriteLine(" ----------------------------------------------------------------------------------------------------- ");
