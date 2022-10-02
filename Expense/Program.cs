@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
-//Console.WriteLine("Hello, World!");
+
+// MAIN
 using System;
 bool exitApp = false;
 string response = "";
@@ -13,6 +14,7 @@ while (!exitApp)
             break;
         case "z":
             continue;
+            break;
         default:
             exitApp = true;
             break;
@@ -22,6 +24,7 @@ public class Expenses
 {
     public static string Login()
     {
+        //Every response in Login needs to go back to Main
         string ans;
         string? userName;
         string? passWord;
@@ -36,9 +39,11 @@ public class Expenses
             case "l":
                 Console.WriteLine("Enter Username");
                 userName = Console.ReadLine();
+                //check database for valid username
                 Console.WriteLine("Enter Password");
                 passWord = Console.ReadLine();
-                //check database for valid user
+                //check database for valid password
+                Console.WriteLine("Credentials verified");
                 return "";
                 break;
             case "r":
