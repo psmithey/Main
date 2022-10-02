@@ -10,10 +10,12 @@ while (!exitApp)
 {
     if (!validUser)
     {
-        response = Expenses.Login();
+        response = Expenses.Login();        
         switch (response)
         {
             case "x": //user has opted to exit the program
+                Console.Clear();
+                Console.WriteLine("Exit Program");
                 exitApp = true;
                 break;
             case "z"://user has entered an invalid response
@@ -36,6 +38,8 @@ while (!exitApp)
         }
         else if (validLogin == "x")
         {
+            Console.Clear();
+            Console.WriteLine("Exit Program");
             exitApp = true;
         }
         else
@@ -65,6 +69,7 @@ public class Expenses
         switch (ans)
         {
             case "l":
+                Console.Clear();
                 Console.WriteLine("");
                 Console.WriteLine("Enter Username");
                 userName = Console.ReadLine();
@@ -74,23 +79,25 @@ public class Expenses
                 passWord = Console.ReadLine();
                 //check database for valid password
                 Console.WriteLine("");
+                Console.Clear();
                 Console.WriteLine("Credentials verified");
                 valid = "userId";
                 return valid; //need to return user ID pulled from database
                 break;
             case "r":
+                Console.Clear();
                 //user will be sent to registration class, and will then need to login
                 return "r"; //the user will see the login menu after registration
                 break;
             case "f":
-
+                Console.Clear();
                 return "f";
                 break;
             case "x":
-                Console.WriteLine("Exit Program");
                 return "x";
                 break;
             default:
+                Console.Clear();
                 Console.WriteLine("Invalid entry. Try again");
                 return "z";
                 break;
@@ -108,18 +115,22 @@ public class Expenses
         switch (ans)
         {
             case "r":
+                Console.Clear();
                 return "r"; //user has submitted a new report and will be brought back to employee class
                 break;
             case "s":
+                Console.Clear();
                 return "r"; //user has viewed past submissions and will be brought back to employee class
                 break;
             case "p":
+                Console.Clear();
                 return "r"; //user has viewed any pending submissinos and will be brought back to employee class
                 break;
             case "x":
                 return "x";
                 break;
             default:
+                Console.Clear();
                 return "z";
                 break;
         }
