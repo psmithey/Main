@@ -3,35 +3,47 @@
 // MAIN
 using System;
 bool exitApp = false;
+bool validUser = false;
 string response = "";
 string validLogin;
 while (!exitApp)
 {
-    response = Expenses.Login();
-    switch (response)
+    if (!validUser)
     {
-        case "x": //user has opted to exit the program
-            exitApp = true;
-            break;
-        case "z": //user has entered an invalid response
-            continue;
-            break;
-        default: //user has successfully logged in, or has registered. the return value is the user's userId from the database
-            validLogin = Expenses.Employee("Paul", "1"); //Paul and 1 is temporary to get the code to work. this will be the response from a valid login or registration
-            if(validLogin == "z")
-            {
-                Console.WriteLine("");
-                Console.WriteLine("You have entered an invalid response");               
-                Console.WriteLine("You must login again if another invalid respose is entered");
-                Console.WriteLine("");
-                validLogin = Expenses.Employee("Paul", "1");
-            }
-            else if(validLogin == "x")
-            {
+        response = Expenses.Login();
+        switch (response)
+        {
+            case "x": //user has opted to exit the program
                 exitApp = true;
-            }
-            break;
+                break;
+            case "z"://user has entered an invalid response
+            case "r"://user registered and now needs to login
+            case "f"://user forgot password and now needs to login
+                continue;
+                break;
+            default: //user has successfully logged in, or has registered. the return value is the user's userId from the database
+                validUser = true;
+                break;
+        }
     }
+    else
+    {
+        validLogin = Expenses.Employee("Paul", "1");
+        if (validLogin == "r" || validLogin == "s" || validLogin == "p")
+        {
+            continue;
+        }
+        else if (validLogin == "x")
+        {
+            exitApp = true;
+        }
+        else
+        {
+            Console.WriteLine("Invalid Entry");
+            Console.WriteLine("");
+        }
+    }
+    
 }
 public class Expenses
 {
@@ -66,12 +78,12 @@ public class Expenses
                 return valid; //need to return user ID pulled from database
                 break;
             case "r":
-
-                return "";
+                //user will be sent to registration class, and will then need to login
+                return "r"; //the user will see the login menu after registration
                 break;
             case "f":
 
-                return "";
+                return "f";
                 break;
             case "x":
                 Console.WriteLine("Exit Program");
@@ -95,13 +107,13 @@ public class Expenses
         switch (ans)
         {
             case "r":
-                return "";
+                return "r"; //user has submitted a new report and will be brought back to employee class
                 break;
             case "s":
-                return "";
+                return "r"; //user has viewed past submissions and will be brought back to employee class
                 break;
             case "p":
-                return "";
+                return "r"; //user has viewed any pending submissinos and will be brought back to employee class
                 break;
             case "x":
                 return "x";
