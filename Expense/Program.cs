@@ -6,11 +6,12 @@ bool exitApp = false;
 bool validUser = false;
 string response = "";
 string validLogin;
+
 while (!exitApp)
 {
     if (!validUser)
     {
-        response = Expenses.Login();        
+        response = Login.LoginMenu();        
         switch (response)
         {
             case "x": //user has opted to exit the program
@@ -50,12 +51,12 @@ while (!exitApp)
     }
     
 }
-public class Expenses
+public class Login
 {
-    
-    public static string Login()
+    public static string LoginMenu()
     {
         //Every response in Login needs to go back to Main
+        Expenses exp = new Expenses();
         string ans;
         string? userName;
         string? passWord;
@@ -73,14 +74,18 @@ public class Expenses
                 Console.WriteLine("");
                 Console.WriteLine("Enter Username");
                 userName = Console.ReadLine();
+                exp.setUserName(userName);
                 //check database for valid username
                 Console.WriteLine("");
                 Console.WriteLine("Enter Password");
                 passWord = Console.ReadLine();
+                exp.setPassWord(passWord);
                 //check database for valid password
                 Console.WriteLine("");
                 Console.Clear();
                 Console.WriteLine("Credentials verified");
+                // Expenses.setFistName("Paul");
+                // Expenses.setUserId("1");
                 valid = "userId";
                 return valid; //need to return user ID pulled from database
                 break;
@@ -104,6 +109,30 @@ public class Expenses
         }
 
     }
+}
+public class Expenses
+{
+    private string username;
+    private string password;
+
+    public string getUserName()
+    {
+        return this.username;
+    }
+    public void setUserName(string value)
+    {
+        this.username = value;
+    }
+
+    public string getPassWord()
+    {
+        return this.password;
+    }
+    public void setPassWord(string value)
+    {
+        this.password = value;
+    }
+
     public static string Employee(string firstName, string userId)
     {
         string ans;
