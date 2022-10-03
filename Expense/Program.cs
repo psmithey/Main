@@ -1,16 +1,21 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 // MAIN
-using System;
+using Microsoft.Data.SqlClient;
+using ExpenseClassLibrary;
 bool exitApp = false;
 bool validUser = false;
 string response = "";
 string validLogin;
 
+Expenses exp = new Expenses();
+
+
 while (!exitApp)
 {
     if (!validUser)
     {
+       
         response = Login.LoginMenu();        
         switch (response)
         {
@@ -26,13 +31,18 @@ while (!exitApp)
                 break;
             default: //user has successfully logged in, or has registered. the return value is the user's userId from the database
                 //it will also be determined the user type during login. admin, manager, or employee
+                
                 validUser = true;
                 break;
         }
     }
     else
     { //there will be an if statement here once it's determined the user type to choose which class to call. admin, manager, or employee
-        validLogin = Expenses.Employee(response);
+        
+        string[] words = response.Split(' ');
+        exp.setFirstName(words[0]);
+        exp.setUserId(words[1]);
+        validLogin = Expenses.Employee(exp.getFirstName(), exp.getUserId());
         if (validLogin == "r" || validLogin == "s" || validLogin == "p")
         {
             continue;
@@ -51,16 +61,21 @@ while (!exitApp)
     }
     
 }
+
 public class Login
 {
     public static string LoginMenu()
     {
         //Every response in Login needs to go back to Main
-        Expenses exp = new Expenses();
         string ans;
+
+        string temp;
+
         string? userName;
         string? passWord;
         string valid;
+        //TestClass tc = new TestClass();
+        //tc.PrintSomething("test");
         Console.WriteLine("");
         Console.WriteLine("                   Expense Report");
         Console.WriteLine(" -------------------------------------------------- ");
@@ -74,26 +89,25 @@ public class Login
                 Console.WriteLine("");
                 Console.WriteLine("Enter Username");
                 userName = Console.ReadLine();
-                //exp.setUserName(userName);
 
                 //check database for valid username
+
+                temp = Expenses.ConnectToDatabase();
 
                 Console.WriteLine("");
                 Console.WriteLine("Enter Password");
                 passWord = Console.ReadLine();
-                //exp.setPassWord(passWord);
 
                 //check database for valid password
 
                 Console.WriteLine("");
                 Console.Clear();
                 Console.WriteLine("Credentials verified");
-                //exp.setFirstName("Paul"); //value will be from database querry
-                //exp.setUserId("1"); //value will be from database querry
+                Console.WriteLine("");
 
                 valid = "Paul UserId"; //these values will be returned from a database querry
 
-                return valid; //need to return user ID pulled from database
+                return valid; //need to return first name and user ID pulled from database
                 break;
             case "r":
                 Console.Clear();
@@ -116,6 +130,7 @@ public class Login
 
     }
 }
+
 public class Expenses
 {
     private string firstName;
@@ -138,14 +153,13 @@ public class Expenses
         this.userId = value;
     }
 
-    public static string Employee(string response)
+    public static string Employee(string fname, string uId)
     {
-        string[] words = response.Split(' ');
-        Expenses exp = new Expenses();
-        exp.setFirstName(words[0]);
-        exp.setUserId(words[1]);
+        
         string ans;
-        Console.WriteLine("User: " + exp.getFirstName());
+        string returnVal;
+        Console.WriteLine("User: " + fname);
+        Console.WriteLine("                                        Employee Menu");
         Console.WriteLine(" ----------------------------------------------------------------------------------------------------- ");
         Console.WriteLine("| " + "Submit new Expense Report(r) View all past submissions(s) View only pending submissions(p) Exit(x) |");
         Console.WriteLine(" ----------------------------------------------------------------------------------------------------- ");
@@ -154,6 +168,7 @@ public class Expenses
         {
             case "r":
                 Console.Clear();
+                //returnVal = NewExpenseReport(uId);
                 return "r"; //user has submitted a new report and will be brought back to employee class
                 break;
             case "s":
@@ -164,14 +179,27 @@ public class Expenses
                 Console.Clear();
                 return "r"; //user has viewed any pending submissinos and will be brought back to employee class
                 break;
-            case "x":
+            case "x": //user wishes to exit the program
                 return "x";
                 break;
-            default:
+            default: //there has been an ivalid key stroke/bad entry
                 Console.Clear();
                 return "z";
                 break;
         }
     }
-}
-    
+    //public static string NewExpenseReport(string uId)
+    //{
+
+    //}
+    public static string ConnectToDatabase()
+    {
+        SqlConnection conn = new SqlConnection("Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True;");
+        conn.Open();
+
+        Console.WriteLine("got past connection");
+        return "foo";
+
+    }
+}   
+
