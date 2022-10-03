@@ -194,12 +194,12 @@ public class Expenses
     //}
     public static string ConnectToDatabase()
     {
-        SqlConnection conn = new SqlConnection("Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True;");
+        SqlConnection conn = new SqlConnection("Server=localhost\\SQLEXPRESS;Database=master;TrustServerCertificate=Yes;Trusted_Connection=True;");
         conn.Open();
 
         Console.WriteLine("got past connection");
         return "foo";
-
+        conn.Close();
     }
 }   
 
